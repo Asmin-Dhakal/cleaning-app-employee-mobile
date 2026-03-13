@@ -23,7 +23,7 @@ class ApiClient {
           // Attach access token to every request
           final token = await SecureStorage.getAccessToken();
           if (token != null) {
-            options.headers['Authorization'] = 'Bearer$token';
+            options.headers['Authorization'] = 'Bearer $token';
           }
 
           // Attach device info header

@@ -34,7 +34,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> login({required String email, required String password}) async {
-    state = state.copyWith(status: AuthStatus.loading, errorMessage: null);
+    state = state.copyWith(status: AuthStatus.loading, clearErrorMessage: true);
 
     try {
       final response = await AuthApi.login(email: email, password: password);
@@ -66,7 +66,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     required String password,
     String? phone,
   }) async {
-    state = state.copyWith(status: AuthStatus.loading, errorMessage: null);
+    state = state.copyWith(status: AuthStatus.loading, clearErrorMessage: true);
 
     try {
       await AuthApi.register(
@@ -97,7 +97,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
     }
 
     await SecureStorage.clearTokens();
-    state = state.copyWith(status: AuthStatus.unauthenticated, employee: null);
+    state = state.copyWith(
+      status: AuthStatus.unauthenticated,
+      clearEmployee: true,
+    );
   }
 
   // Decode JWT to extract employee info without calling the server
